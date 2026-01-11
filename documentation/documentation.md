@@ -58,7 +58,6 @@ Date queste metriche di valutazione le feature sono state scelte attraverso vari
 
 In linea generale ogni criterio di valutazione esposto non basta (da solo) a inquadrare l'utilità di una feature, ma va osservato nell'insieme, soprattutto rispetto a ciò che il modello indica come importante. Preso nota di questo ogni metrica avrebbe una indicazione propria su come gestire una feature:
 
-
 * **Mappa di correlazione**: analizzando le feature a coppie, nelle coppie con correlazione $\geq 0.9$ (in valore assoluto) si decide di scartarne una.
 
 * **MI score**: le feature con un punteggio scarso o prossimo a 0 possono essere eliminate
@@ -127,11 +126,11 @@ Classification Report (Test Set):
  weighted avg       0.57      0.59      0.55       290 
 ```    
 
-con la seguente matrice di confusione: 
+con la seguente matrice di confusione:
 
-![Matrice di confusione](./img/cm.png){ width=10cm }
+![Matrice di confusione](./img/cm.png){ width=8.5cm }
 
-* Poi è stato anche visto e confrontato il modello con altre strategie; in particolare è stata ideata una strategia che sfrutta le azioni del modello, analizzata più in dettaglio \underline{sotto}
+* Poi è stato anche visto e confrontato il modello con altre strategie; in particolare è stata ideata una strategia che sfrutta le azioni del modello, analizzata più in dettaglio [\underline{sotto}.](#dettagli-tecnici-implementativi-technical-implementation-details)
 
 Quello che è stato ottenuto nel periodo che va dal 2024-09-26 al 2025-11-28, partendo da un budget di 1000$ con commissioni allo 0.2%, è:
 
@@ -140,8 +139,6 @@ Quello che è stato ottenuto nel periodo che va dal 2024-09-26 al 2025-11-28, pa
 |Buy and Hold| 1220.71 | 22.071% |
 |Trend Chaser| 1059.72 | 5.973% |
 |Modello | 1277.69 | 27.769% |
-\newpage
-
 
 ![Periodo testing](./img/trading.png)
 
@@ -232,7 +229,7 @@ Tuttavia, sono rimaste molte altre strade da poter esplorare per migliorare ulte
 * Esplorare modelli alternativi: Noi abbiamo ulilizzato `XGBoost` come modello per motivi che abbiamo esposto sopra, ma come da secondo obbiettivo abbiamo analizzato anche altri modelli.
     * Cercando online è stato individuato un [\underline{articolo}](https://www.itm-conferences.org/articles/itmconf/abs/2022/04/itmconf_icacc2022_03060/itmconf_icacc2022_03060.html) che confronta diversi modelli per la regressione del prezzo di chiusura di Apple. In tale confronto, **Prophet** risulta essere il modello con le prestazioni peggiori tra quelli considerati nello studio. Questa evidenza, unita ad opinioni reperite online secondo le quali Prophet tende ad adottare un approccio eccessivamente lineare per questo tipo di problema, ha portato alla decisione di non includere Prophet nelle analisi personali perchè non significativo. 
     
-    * È stata quindi valutata la possibilità che **ARIMA** presentasse un potenziale maggiore. Il problema della conversione da modello di regressione a classificatore è stato risolto come descritto in [\underline{precedenza}](#adattamento-di-arima-da-regressore-a-classificatore). Dall’analisi è emerso che il risultato dipende in modo significativo dal peso delle componenti autoregressiva, differenziale e di media mobile (P, D, Q). In funzione di tali parametri, il modello può assumere un comportamento estremamente aggressivo, generando numerosi segnali di BUY, oppure estremamente conservativo, producendo esclusivamente segnali di SELL. La configurazione che ha fornito i risultati migliori è stata (1, 1, 0), la quale ha generato un singolo segnale di BUY con una precisione del 100%, segue la matrice di confusione risultante: 
+    * È stata quindi valutata la possibilità che **ARIMA** presentasse un potenziale maggiore. Il problema della conversione da modello di regressione a classificatore è stato risolto come descritto in [\underline{precedenza}](#adattamento-di-arima-da-regressore-a-classificatore). Dall’analisi è emerso che il risultato dipende in modo significativo dal peso delle componenti autoregressiva, differenziale e di media mobile (P, D, Q). In funzione di tali parametri, il modello può assumere un comportamento estremamente aggressivo, generando numerosi segnali di BUY, oppure estremamente conservativo, producendo esclusivamente segnali di SELL. La configurazione che ha fornito i risultati migliori è stata (1, 1, 0), la quale ha generato un singolo segnale di BUY con una precisione del 100%, segue la matrice di confusione risultante: \newpage 
 
       ![Matrice di confusione ARIMA](./img/cm_arima.png){ width=10cm }
 
@@ -257,4 +254,4 @@ Tuttavia, sono rimaste molte altre strade da poter esplorare per migliorare ulte
       |Buy and Hold| 1220.71 | 22.071% |
       |LSTM | 1360.47 | 36.05% |
 
-      ![Trading LSTM](./img/trading_lstm.png)
+      ![Trading LSTM](./img/trading_lstm.png){ height=6.5cm }
